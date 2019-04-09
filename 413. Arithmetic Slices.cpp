@@ -1,31 +1,29 @@
 #include<iostream>
 #include<vector>
-
 using namespace std;
 
-int numberOfArithmeticSlices(vector<int>& A) {
-    if(A.size() <= 2)
-    return 0;
-    int sum = 0;
-    int count = 0;
-    for(int i =2;i<A.size();i++)
+int numberOfArithmeticsSlices(vector<int>& A)
+{
+    if(A.size() < 3)
+        return 0;
+    vector<int> res;
+    res.resize(A.size());
+    res[0] = 0;
+    res[1] = 0;
+    res[2] = 1;
+    for(int i = 3;i<A.size();i++)
     {
-        if(A[i] - A[i-1] == A[i-1] - A[i-2])
-        {
-            count++;
-            sum += count;
-        }
-        else
-        {
-            count = 0;
-        }
+        res[i] = res[i-1] + i - 2 + 1;
     }
-    return sum;
+    return res[res.size() -1];
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
-    
-    system("pause");
+    int a[] = {1, 2, 3, 8, 9, 10};
+    vector<int> data(a, a+4);
+    int res = numberOfArithmeticsSlices(data);
+    cout<<res<<endl;
+    cout<<"hello world"<<endl;
     return 0;
 }

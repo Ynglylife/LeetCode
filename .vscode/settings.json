@@ -1,12 +1,14 @@
 {
+    "python.venvPath": "/home/liyang/",
+    "python.pythonPath": "/home/liyang/anaconda3/bin/python",
+    "python.venvFolders": [
+        "tensorlow",
+        "envs",
+        ".pyenv",
+        ".direnv"
+    ],
     "files.associations": {
-        "array": "cpp",
-        "unordered_map": "cpp",
-        "vector": "cpp",
-        "initializer_list": "cpp",
-        "string_view": "cpp",
         "iostream": "cpp",
-        "utility": "cpp",
-        "deque": "cpp"
+        "ostream": "cpp"
     }
 }
