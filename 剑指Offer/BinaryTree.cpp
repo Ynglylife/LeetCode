@@ -31,7 +31,7 @@ private:
     void _inOrderTravel(TreeNode *)const;
     void _inOrderTravelWithLoop(TreeNode* )const;
     void _postOrderTravel(TreeNode *)const;
-//    void _postOrderTravelWithLoop(TreeNode* )const;
+    void _postOrderTravelWithLoop(TreeNode* )const;
     TreeNode* _construct(vector<int> pre, vector<int> in, int pre_start, int pre_length, int in_start, int in_length);
 };
 
@@ -66,7 +66,7 @@ void BinaryTree::_preOrderTravelWithLoop(TreeNode* node)const{
 }
 
 void BinaryTree::inOrderTravel() const{
-    this->_inOrderTravel(root);
+    this->_inOrderTravelWithLoop(root);
     cout<<"\n"<<endl;
 }
 
@@ -81,19 +81,40 @@ void BinaryTree::_inOrderTravel(TreeNode* node)const{
 void BinaryTree::_inOrderTravelWithLoop(TreeNode* node)const{
     stack<TreeNode*> node_stack;
     TreeNode* temp = node;
+    // TreeNode* pre = node;
     while(temp!=nullptr or not node_stack.empty())
     {
-        if(temp == nullptr)
-        {
-            temp = node_stack.top();
-            node_stack.pop();
+        if(temp != nullptr){
+            node_stack.push(temp);
+            temp = temp->left;
         }
-        
+        else{
+            temp = node_stack.top();
+            cout<<temp->val<<" ";
+            node_stack.pop();
+            temp = temp->right;
+        }
+
+        // if (temp == nullptr)
+        // {
+        //     temp = node_stack.top();
+        //     node_stack.pop();
+        //     pre = temp->left;
+        // }
+        // if(pre == temp->left){
+        //     cout<<temp->val<<" ";
+        //     pre = temp;
+        //     temp = temp->right;
+        // }
+        // else{
+        //     node_stack.push(temp);
+        //     temp = temp->left;
+        // }
     }
 }
 
 void BinaryTree::postOrderTravel() const{
-    this->_postOrderTravel(root);
+    this->_postOrderTravelWithLoop(root);
     cout<<"\n"<<endl;
 }
 
@@ -103,6 +124,50 @@ void BinaryTree::_postOrderTravel(TreeNode* node)const{
     this->_postOrderTravel(node->left);
     this->_postOrderTravel(node->right);
     cout<<node->val<<" ";
+}
+
+void BinaryTree::_postOrderTravelWithLoop(TreeNode* node)const{
+    TreeNode* temp = node;
+    TreeNode* pre = nullptr;
+    stack<TreeNode*> node_stack, output;
+    node_stack.push(temp);
+    while (!node_stack.empty()) {
+        TreeNode *curr = node_stack.top();
+        output.push(curr);
+        node_stack.pop();
+        if (curr->left)
+            node_stack.push(curr->left);
+        if (curr->right)
+            node_stack.push(curr->right);
+    }
+    
+    while (!output.empty()) {
+        cout << output.top()->val << " ";
+        output.pop();
+    }
+    cout << endl;
+
+    // while (temp or !node_stack.empty()){
+    //     if (temp != nullptr)
+    //     {
+    //         node_stack.push(temp);
+    //         temp = temp->left;
+    //     }
+    //     else{
+    //         temp = node_stack.top();
+    //         node_stack.pop();
+    //         if (temp->right and pre != temp->right){
+    //             node_stack.push(temp);
+    //             temp = temp->right;
+    //         }
+    //         else
+    //         {
+    //             cout<<temp->val<<" ";
+    //             pre = temp;
+    //             temp = nullptr;
+    //         }
+    //     }
+    // }
 }
 
 void BinaryTree::layerTravel() const{
@@ -161,7 +226,7 @@ int main()
     vector<int> v1(a1,a1+8);
     vector<int> v2(a2,a2+8);
     now->construct(v1,v2);
-    now->preOrderTravel();
+    now->postOrderTravel();
     //now->inOrderTravel();
     //now->postOrderTravel();
     //now->layerTravel();
